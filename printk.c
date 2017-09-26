@@ -6,28 +6,24 @@ int printchar(int ch)
 	putchar(ch);
 }
 
-void printint(int m)
+void printint(int m, int base)
 {
-	int d, ch;
+	int i, ch;
+	char buf[33];
 
-	d = 1;
-	ch = d * 10;
+	i = 0;
 
-	while (ch <= m) {
-		d = ch;
-		ch *= 10;
+	do {
+		buf[i++] = m % base;
+		m /= base;
+	} while (m);
+
+fprintf(stderr, "i: %d\n", i);
+
+	while(i--) {
+		ch = buf[i];
+		printchar(ch+'0');
 	}
-
-	while(d) {
-		ch = m / d;
-		ch += '0';
-		printchar(ch);
-		m = m % d;
-
-		d /= 10;
-	}
-
-	return;
 }
 
 void printhex(int hex)
@@ -81,8 +77,13 @@ int format(const char *fmt)
 
 int main(int argc, char *argv[])
 {
-	printint(12395588);
-	printhex(0xdeadbeef);
+//	printint(12395588, 2);
+printf("\r\n");
+	printint(0x7fffffff, 10);
+printf("\r\n");
+//	printhex(0xdeadbeef);
+printf("\r\n");
 	format("%12234234235253d\n");
+printf("\r\n");
 }
 
